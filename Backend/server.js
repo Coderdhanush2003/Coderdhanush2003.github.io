@@ -1,44 +1,50 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 
-const dotenv = require('dotenv')
+const dotenv = require("dotenv");
 
-dotenv.config()
+dotenv.config();
 
-const mongoose = require('mongoose')
-const URI = process.env.MONGO_URL
+const mongoose = require("mongoose");
+const URI = process.env.MONGO_URL;
 
-const cors = require('cors');
+console.log(URI);
 
+const cors = require("cors");
 
-
-const user = require('./routes/user')
-const cart = require('./routes/cart')
-const favourite = require('./routes/Favourite')
+const user = require("./routes/user");
+const cart = require("./routes/cart");
+const favourite = require("./routes/Favourite");
 
 PORT = process.env.PORT || 2500;
 
-app.use(cors({
-    origin: "http://localhost:5173"
-}))
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 
-app.use(express.json())
+app.use(express.json());
 
-app.use('/',user)
-app.use('/',cart)
-app.use('/',favourite)
+app.use("/", user);
+app.use("/", cart);
+app.use("/", favourite);
 
-
-async function start(){
-    try {
-       if(await mongoose.connect(URI)){
-        app.listen(PORT,()=>{
-            console.log("Database Connected Successfully")
-            console.log("Server is Running")
-        })  
-       }
-    } catch (error) {
-        console.log(error)
+async function start() {
+  try {
+    if (
+      await mongoose.connect(URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      })
+    ) {
+      app.listen(PORT, () => {
+        console.log("Database Connected Successfully");
+        console.log("Server is Running");
+      });
     }
+  } catch (error) {
+    console.log(error);
+  }
 }
-start()
+start();
