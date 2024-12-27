@@ -12,6 +12,7 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     if (!email || !password) {
       setError("Please fill in both fields");
       return;
@@ -20,9 +21,7 @@ export const Login = () => {
     try {
       const response = await fetch("https://ecommerce-fullstack-r9n1.onrender.com/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
       
@@ -30,6 +29,7 @@ export const Login = () => {
       
       if (data.error) {
         setError(data.error);
+        toast.error(data.error);
         return;
       }
 
@@ -39,31 +39,19 @@ export const Login = () => {
         setUniqueId(data._id);
         localStorage.setItem("uniqueId", data._id);
         
-        // Clear previous user's data
-        setCartItems([]);
-        setFavourites([]);
-        
-        // Reset form
+        // Reset state
         setEmail('');
         setPassword('');
         setError('');
+        setCartItems([]);
+        setFavorites([]);
         
-        // Fetch new user's data
-        const cartResponse = await fetch(`https://ecommerce-fullstack-r9n1.onrender.com/getcart/${data._id}`);
-        const cartData = await cartResponse.json();
-        setCartItems(cartData || []);
-
-        const favResponse = await fetch(`https://ecommerce-fullstack-r9n1.onrender.com/getfavourite/${data._id}`);
-        const favData = await favResponse.json();
-        setFavourites(favData || []);
-
+        toast.success("Login successful!");
         navigate("/");
-      } else {
-        setError(data.message);
       }
     } catch (error) {
       console.error("Login error:", error);
-      setError("An error occurred during login");
+      toast.error("An error occurred during login");
     }
   };
 

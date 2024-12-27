@@ -13,6 +13,8 @@ import  sleeves  from "./assets/sleeves.jpg";
 import  tshirt  from "./assets/tshirts.jpg";
 import  trousers  from "./assets/trousers.jpg";
 import  vneck  from "./assets/vneck.jpg";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const UserContext = createContext();
   const productList = [
@@ -124,7 +126,7 @@ function App() {
       >
         <BrowserRouter>
           <Navbar />
-
+          <ToastContainer />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
