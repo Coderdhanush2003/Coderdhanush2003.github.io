@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const path = require('path');
 
 const dotenv = require("dotenv");
 
@@ -10,6 +11,8 @@ const URI = process.env.MONGO_URL;
 
 
 const cors = require("cors");
+
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 const user = require("./routes/user");
 const cart = require("./routes/cart");
@@ -28,6 +31,10 @@ app.use(express.json());
 app.use("/", user);
 app.use("/", cart);
 app.use("/", favourite);
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+});
 
 async function start() {
   try {
