@@ -14,6 +14,7 @@ const Products = () => {
     setCartItems,
     Favourites,setFavourites
     ,uniqueId,
+    userLogged
   } = useContext(UserContext);
 
   const [temporaryQuantities, setTemporaryQuantities] = useState({});
@@ -126,7 +127,7 @@ const Products = () => {
   useEffect(() => {
     getCartItems();
     getFavourites();
-  }, []); // Only rerun when uniqueId changes
+  }, [userLogged]); // Only rerun when uniqueId changes
   
   useEffect(() => {
     postCartItems();
