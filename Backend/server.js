@@ -8,7 +8,6 @@ dotenv.config();
 const mongoose = require("mongoose");
 const URI = process.env.MONGO_URL;
 
-console.log(URI);
 
 const cors = require("cors");
 
@@ -33,10 +32,7 @@ app.use("/", favourite);
 async function start() {
   try {
     if (
-      await mongoose.connect(URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      })
+      await mongoose.connect(URI)
     ) {
       app.listen(PORT, () => {
         console.log("Database Connected Successfully");
