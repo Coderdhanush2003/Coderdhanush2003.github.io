@@ -163,6 +163,12 @@ const Products = () => {
     }
   }
 
+    useEffect(() => {
+    if (uniqueId) {
+      fetchUserData(uniqueId);
+    }
+  }, [uniqueId]);
+
   return (
     <div className="md:grid grid-cols-12 mt-4 z-12 h-auto flex flex-col">
       {/* Left Container */}
