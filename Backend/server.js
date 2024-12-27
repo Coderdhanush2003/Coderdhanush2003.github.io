@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 const mongoose = require('mongoose')
-const URI = "mongodb+srv://dhanush2003shankar:rf3umMjnAMmIjGOA@ecommercedb.z0mqi.mongodb.net/?retryWrites=true&w=majority&appName=ecommerceDB"
+const URI = process.env.URI
 
 const cors = require('cors');
 
@@ -10,7 +10,7 @@ const user = require('./routes/user')
 const cart = require('./routes/cart')
 const favourite = require('./routes/Favourite')
 
-PORT = 2500;
+PORT = process.env.PORT || 2500;
 
 app.use(cors({
     origin: "http://localhost:5173"
