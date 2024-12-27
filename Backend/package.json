@@ -3,17 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "install-server": "cd Backend && npm install",
-    "start-server": "cd Backend && node app.js",
-    "install-client": "cd Ecommerce && npm install",
-    "build-client": "cd Ecommerce && npm run build",
-    "start-client": "cd Ecommerce && npm run start"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongodb": "^6.12.0",
     "mongoose": "^8.9.2"

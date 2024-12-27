@@ -1,10 +1,16 @@
 const express = require('express');
 const app = express();
 
+const dotenv = require('dotenv')
+
+dotenv.config()
+
 const mongoose = require('mongoose')
-const URI = process.env.URI
+const URI = process.env.MONGO_URL
 
 const cors = require('cors');
+
+
 
 const user = require('./routes/user')
 const cart = require('./routes/cart')
