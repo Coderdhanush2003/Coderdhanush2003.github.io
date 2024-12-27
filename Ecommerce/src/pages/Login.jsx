@@ -4,10 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 
 export const Login = () => {
-  const { email, setEmail, password, setPassword, error, setError,  userLogged,
-    setUserLogged,uniqueId,setUniqueId} =
-    useContext(UserContext);
-
+  const { 
+    email, setEmail, 
+    password, setPassword, 
+    error, setError, 
+    setUserLogged,
+    setUniqueId
+  } = useContext(UserContext);
+  
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -35,9 +39,11 @@ export const Login = () => {
 
       if (data.message === "Login successful!") {
         setUserLogged(true);
-        localStorage.setItem("user", "true");
         setUniqueId(data._id);
         localStorage.setItem("uniqueId", data._id);
+        
+        // Fetch user's cart and favorites immediately after login
+        await fetchUserData(data._id);
         
         toast.success("Login successful!");
         navigate("/");
