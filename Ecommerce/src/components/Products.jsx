@@ -63,7 +63,7 @@ const Products = () => {
 
   async function postCartItems() {
     try {
-      const response = await fetch("http://localhost:2500/addtocart", {
+      const response = await fetch("https://ecommerce-fullstack-r9n1.onrender.com/addtocart", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

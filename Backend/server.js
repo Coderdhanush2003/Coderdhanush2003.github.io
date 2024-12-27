@@ -27,7 +27,7 @@ PORT = process.env.PORT || 2500;
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://ecommerce-frontend-gvkl.onrender.com",
   })
 );
 

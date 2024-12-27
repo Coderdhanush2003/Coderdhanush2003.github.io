@@ -17,7 +17,7 @@ export const Login = () => {
     } else {
       setError(""); // Reset error if both fields are filled
       console.log("Form submitted with", { email, password });
-      const response = await fetch("http://localhost:2500/login", {
+      const response = await fetch("https://ecommerce-fullstack-r9n1.onrender.com/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
