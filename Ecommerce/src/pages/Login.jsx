@@ -42,9 +42,6 @@ export const Login = () => {
         setUniqueId(data._id);
         localStorage.setItem("uniqueId", data._id);
         
-        // Fetch user's cart and favorites immediately after login
-        await fetchUserData(data._id);
-        
         toast.success("Login successful!");
         navigate("/");
       }

@@ -43,6 +43,12 @@ const Products = () => {
     });
   };
 
+  useEffect(() => {
+    if (userLogged && uniqueId) {
+      postCartItems();
+    }
+  }, [cartItems]);
+
   const cartPush = (product) => {
     if (!userLogged) {
       toast.error("Please login to add items to cart", {

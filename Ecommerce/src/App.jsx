@@ -1,4 +1,3 @@
-// App.jsx
 import { createContext, useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -26,49 +25,28 @@ function App() {
   const [userLogged, setUserLogged] = useState(false);
   const [uniqueId, setUniqueId] = useState("");
 
-  // Check authentication status on initial load
+  // Load user data when uniqueId changes
   useEffect(() => {
-    const checkAuth = async () => {
-      const storedId = localStorage.getItem("uniqueId");
-      if (storedId) {
-        try {
-          const response = await fetch("https://ecommerce-fullstack-r9n1.onrender.com/verify-auth", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ uniqueId: storedId }),
-          });
-          
-          const data = await response.json();
-          if (data.verified) {
-            setUserLogged(true);
-            setUniqueId(storedId);
-            // Fetch user's cart and favorites
-            await fetchUserData(storedId);
-          } else {
-            // Clear invalid auth data
-            handleLogout();
-          }
-        } catch (error) {
-          console.error("Auth verification failed:", error);
-          handleLogout();
-        }
-      }
-    };
-    
-    checkAuth();
-  }, []);
+    if (uniqueId) {
+      fetchUserData(uniqueId);
+    }
+  }, [uniqueId]);
 
   const fetchUserData = async (userId) => {
     try {
       // Fetch cart items
       const cartResponse = await fetch(`https://ecommerce-fullstack-r9n1.onrender.com/getcart/${userId}`);
       const cartData = await cartResponse.json();
-      setCartItems(cartData || []);
+      if (cartData) {
+        setCartItems(cartData);
+      }
 
       // Fetch favorites
       const favResponse = await fetch(`https://ecommerce-fullstack-r9n1.onrender.com/getfavourite/${userId}`);
       const favData = await favResponse.json();
-      setFavourites(favData || []);
+      if (favData) {
+        setFavourites(favData);
+      }
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -125,5 +103,3 @@ function App() {
     </UserContext.Provider>
   );
 }
-
-export default App;
