@@ -19,7 +19,8 @@ const Navbar = () => {
     setCartItems,
     FavouritesVisible,
     setFavouritesVisible,
-    Favourite,
+    Favourites,
+    setFavourites,
     userLogged,
     setUserLogged,
   } = useContext(UserContext);
@@ -34,11 +35,14 @@ const Navbar = () => {
 
   function handleLogout() {
     setUserLogged(false);
+    setCartItems([]); // Clear cart items on logout
+    setFavourites([]); // Clear favorites on logout
     localStorage.removeItem("user");
     localStorage.removeItem("uniqueId");
-    localStorage.removeItem('cartItems');
-    localStorage.removeItem('Favourites');
+    localStorage.removeItem("cartItems");
+    localStorage.removeItem("Favourites");
   }
+  
 
   useEffect(() => {
     // Ensure that cartItems are persisted to localStorage
