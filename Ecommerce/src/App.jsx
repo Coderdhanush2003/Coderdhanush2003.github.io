@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export const UserContext = createContext();
 
-export function App() {
+ function App() {
   const [searchValue, setSearchValue] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(productList);
   const [category, setCategory] = useState("all");
@@ -103,3 +103,5 @@ export function App() {
     </UserContext.Provider>
   );
 }
+
+export default App;
