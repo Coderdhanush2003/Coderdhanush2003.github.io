@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from 'react-toastify';
 
 export const Login = () => {
   const { email, setEmail, password, setPassword, error, setError,  userLogged,
@@ -38,13 +38,6 @@ export const Login = () => {
         localStorage.setItem("user", "true");
         setUniqueId(data._id);
         localStorage.setItem("uniqueId", data._id);
-        
-        // Reset state
-        setEmail('');
-        setPassword('');
-        setError('');
-        setCartItems([]);
-        setFavorites([]);
         
         toast.success("Login successful!");
         navigate("/");
