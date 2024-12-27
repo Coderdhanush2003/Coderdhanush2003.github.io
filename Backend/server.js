@@ -14,6 +14,11 @@ const cors = require("cors");
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+});
+
+
 const user = require("./routes/user");
 const cart = require("./routes/cart");
 const favourite = require("./routes/Favourite");
@@ -32,9 +37,6 @@ app.use("/", user);
 app.use("/", cart);
 app.use("/", favourite);
 
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-});
 
 async function start() {
   try {
