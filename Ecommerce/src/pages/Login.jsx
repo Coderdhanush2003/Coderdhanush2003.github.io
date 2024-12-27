@@ -12,11 +12,12 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email === "" || password === "") {
+    if (!email || !password) {
       setError("Please fill in both fields");
-    } else {
-      setError(""); // Reset error if both fields are filled
-      console.log("Form submitted with", { email, password });
+      return;
+    }
+
+    try {
       const response = await fetch("https://ecommerce-fullstack-r9n1.onrender.com/login", {
         method: "POST",
         headers: {
@@ -24,24 +25,45 @@ export const Login = () => {
         },
         body: JSON.stringify({ email, password }),
       });
+      
       const data = await response.json();
+      
       if (data.error) {
         setError(data.error);
-      } else {
-        console.log(data);
-        if(data.message === "Login successful!"){
-        setUserLogged((prev) => !prev);
-        localStorage.setItem("user", true);
-        setUniqueId(data._id)
-        localStorage.setItem("uniqueId", data._id);
-        setEmail('')
-        setPassword('')
-        navigate("/");
+        return;
       }
-        else{
-            setError(data.message);
-        }
-    }
+
+      if (data.message === "Login successful!") {
+        setUserLogged(true);
+        localStorage.setItem("user", "true");
+        setUniqueId(data._id);
+        localStorage.setItem("uniqueId", data._id);
+        
+        // Clear previous user's data
+        setCartItems([]);
+        setFavourites([]);
+        
+        // Reset form
+        setEmail('');
+        setPassword('');
+        setError('');
+        
+        // Fetch new user's data
+        const cartResponse = await fetch(`https://ecommerce-fullstack-r9n1.onrender.com/getcart/${data._id}`);
+        const cartData = await cartResponse.json();
+        setCartItems(cartData || []);
+
+        const favResponse = await fetch(`https://ecommerce-fullstack-r9n1.onrender.com/getfavourite/${data._id}`);
+        const favData = await favResponse.json();
+        setFavourites(favData || []);
+
+        navigate("/");
+      } else {
+        setError(data.message);
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setError("An error occurred during login");
     }
   };
 

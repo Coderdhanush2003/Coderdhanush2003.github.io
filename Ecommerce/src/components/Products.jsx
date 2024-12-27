@@ -40,6 +40,17 @@ const Products = () => {
   };
 
   const cartPush = (product) => {
+
+    if (!userLogged) {
+      // Show login required message
+      toast.error("Please login to add items to cart", {
+        position: "top-center",
+        autoClose: 2000,
+      });
+      navigate('/login');
+      return;
+    }
+
     const quantity = temporaryQuantities[product.id] || 1; // Use the temp quantity if not already added to cart
   
     const existingProduct = cartItems.find((item) => item.id === product.id);
@@ -125,9 +136,11 @@ const Products = () => {
   
 
   useEffect(() => {
-    getCartItems();
-    getFavourites();
-  }, [userLogged]); // Only rerun when uniqueId changes
+    if (userLogged && uniqueId) {
+      getCartItems();
+      getFavourites();
+    }
+  }, [userLogged,uniqueId]); // Only rerun when uniqueId changes
   
   useEffect(() => {
     postCartItems();

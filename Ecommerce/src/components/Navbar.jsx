@@ -37,10 +37,10 @@ const Navbar = () => {
     setUserLogged(false);
     setCartItems([]); // Clear cart items on logout
     setFavourites([]); // Clear favorites on logout
-    localStorage.removeItem("user");
-    localStorage.removeItem("uniqueId");
-    localStorage.removeItem("cartItems");
-    localStorage.removeItem("Favourites");
+    setUniqueId(null);
+    
+    localStorage.clear();
+    navigate('/login');
   }
   
 
